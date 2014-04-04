@@ -1,6 +1,7 @@
 #import makedatabase
 import config
 import os
+import sys
 
 # if not os.path.isfile(config.hrv_database_path):
 #     makedatabase.makedatabase(config.hrv_database_path, config.base_path_list)
@@ -12,7 +13,8 @@ import sqlite3
         
 urls = (
     '/map/(.*)', 'handleRequest',
-    '/terrain/(.*)', 'handleTerrain'
+    '/terrain/(.*)', 'handleTerrain',
+    '/upload', 'Upload'
 )
 app = web.application(urls, globals())
 
@@ -28,7 +30,26 @@ class handleTerrain:
         with open(config.terrain_path+qurey_string, 'rb') as fout:
             data = fout.read()
         return data
+    
+class Upload:
+   
 
+     def POST(self):
+        x = web.input(myfile={})
+        print 'path:',sys.path[0]
+        filedir = sys.path[0]+'\static\picture' # change this to the directory you want to store the file in.
+        
+        if 'myfile' in x: # to check if the file-object is created
+            filepath=x.myfile.filename.replace('\\','/') # replaces the windows-style slashes with linux ones.
+            filename=filepath.split('/')[-1] # splits the and chooses the last part (the filename with extension)
+            print 'filename'+filename
+            fout = open(filedir +'/'+ filename,'wb') # creates the file where the uploaded file should be stored
+            print 'file:'+filedir +'/'+ filename
+            fout.write(x.myfile.file.read()) # writes the uploaded file to the newly created file.
+            fout.close() # closes the file, upload complete.
+            
+        return filename
+    
 class handleRequest:        
     def GET(self, qurey_string):
         map_name, z, x, y = qurey_string.split("/")

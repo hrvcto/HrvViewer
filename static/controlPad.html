@@ -53,6 +53,7 @@
     <hr>
     <button data-type="loadCzml" disabled>Load Czml</button>
     <button data-type="removeCzml" disabled>Remove Czml</button>
+    <button data-type="toNorth" disabled>To North</button>
   </div>
   <script src="assets/scripts/jquery-2.1.0.min.js"></script>
   <script src="SocketServer/WebSocket.js"></script>
@@ -73,7 +74,7 @@
       WebSocketHelper.sendMessage('{"func_name":"showObject", "args":{"id": "p1"}}');
       break;
       case 'showSubtitle':
-      WebSocketHelper.sendMessage('{"func_name":"showSubtitle", "args":{"text":"Some <br/> Text <br/> aaa","position":{"width":200,"height":200,"x":100,"y":40},"fontSize":14, "fontColor": "blue", "backgroundColor": "rgba(255,0,0,0.3)","alignment":"center"}}');
+      WebSocketHelper.sendMessage('{"func_name":"showSubtitle", "args":{"text":"Some <br/> Text <br/> aaa","position":{"width":200,"height":200,"x":100,"y":40}, "backgroundColor": "rgba(255,0,0,0.3)","textStyle":"text"}}');
       break;
       case 'closeSubtitle':
       WebSocketHelper.sendMessage('{"func_name":"closeSubtitle", "args":{}}');
@@ -129,7 +130,7 @@
       break;
       //TODO add other apis
       case 'flyTo':
-      WebSocketHelper.sendMessage('{"func_name":"flyTo","args":{"position":{"longitude":"-77.21171","latitude":"38.535143","height":500},"duration":100}}');
+      WebSocketHelper.sendMessage('{"func_name":"flyTo","args":{"position":{"longitude":"-77.21171","latitude":"38.535143","height":500},"duration":100,"rotation":"30"}}');
       break;
       case 'flyToExtent':
       WebSocketHelper.sendMessage('{"func_name":"flyToExtent","args":{"extent":{"west":-90.0,"east":-87.0,"south":38,"north":40},"duration":400}}');
@@ -168,6 +169,9 @@
       break;
       case 'hidePosition':
       WebSocketHelper.sendMessage('{"func_name":"showPosition", "args":{"show": false}}');
+      break;
+      case 'toNorth':
+      WebSocketHelper.sendMessage('{"func_name":"toNorth", "args":{}}');
       break;
     }
   });

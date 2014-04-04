@@ -19,6 +19,7 @@ define(['./api.utils.js'],function(utils) {
       duration: options.duration || DefaultDuration
     });
     scene.animations.add(flight);
+    scene.camera.controller.heading=options.rotation/360;
   }
   return flyTo;
 });
