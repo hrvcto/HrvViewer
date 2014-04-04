@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ch">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>HUARUIVIEW</title>
+	<meta name="keywords" content="countryServiceList">
+	<meta name="description" content="countryServiceList">
+	<link rel="stylesheet" href="css/countryServiceList.css">
+	<script type="text/javascript" src="js/jquery-1.8.2.js"></script>
+	<script src="../SocketServer/WebSocket.js"></script>
+	
+	<script> WebSocketHelper.connect('ws://'+window.location.hostname+':8000').on('open', function(e){
+
+		$('#main').css({"backgroundImage":"url(about:blank)"});})</script>
+		<script type="text/javascript" src="js/loadPage.js"></script>
+	</head>
+	<body>
+		<div id="main">
+			
+			<div id="buttonList">
+				
+					<span class="backBtn">返回上级</span>
+					<span class="btnText">
+						<b>输入经度</b>
+						<input type="text" id="longText" value="0" />
+						<b>输入纬度</b>
+						<input type="text" id="latText" value="0" />
+						<b>输入高度</b>
+						<input type="text" id="heightText" value="500" />
+						<input type="button" id="search" value="查找"/>
+					</span>
+					<span class="closeBtn">关闭</span>
+				
+			</div>
+			
+		</div>
+
+</body>
+</html>

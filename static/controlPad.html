@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cesium Control Pad</title>
+    <meta charset="UTF-8">
+    <style>
+    .connect-status{background-color:#ddd; padding:10px; text-align: center; border:1px solid #ccc;}
+    .connect-status.connected{color:#fff; background-color:green;}
+    .connect-status.error{color:#fff; background-color:red;}
+    .operations{margin:20px;}
+    </style>
+  </head>
+  <body>
+  <div class="connect-status" id="connectStatus">
+    Connecting...
+  </div>
+  <div class="operations" id="operations">
+    <button data-type="setModeTo2D" disabled>SetModeTo2D</button>
+    <button data-type="setModeTo3D" disabled>SetModeTo3D</button>
+    <button data-type="setModeToColumbus" disabled>SetModeToColumbus</button>
+    <button data-type="loadModel" disabled>loadModel</button>
+    <button data-type="twinkleModel" disabled>twinkleModel</button>
+    <button data-type="showModel" disabled>showModel</button>
+    <button data-type="hideModel" disabled>hideModel</button>
+    <button data-type="deleteModel" disabled>deleteModel</button>
+    <button data-type="magnifyModel" disabled>magnifyModel</button>
+    <button data-type="reduceModel" disabled>reduceModel</button>
+    <hr>
+    <button data-type="addLabel" disabled>Add Label</button>
+    <button data-type="addBillboard" disabled>Add Billboard</button>
+    <button data-type="addAnimation" disabled>addAnimation</button>
+    <button data-type="createSensor" disabled>Create Sensor</button>
+    <button data-type="createRing" disabled>Create Ring</button>
+    <hr>
+    <button data-type="createPolyline" disabled>Create Polyline</button>
+    <button data-type="createPolygon" disabled>Create Polygon</button>
+    <button data-type="createEllipse" disabled>Create Ellipse</button>
+    <button data-type="createEllipsoid" disabled>Create Ellipsoid</button>
+    <hr>
+    <button data-type="flyTo" disabled>Fly To</button>
+    <button data-type="flyToExtent" disabled>Fly To Extent</button>
+    <button data-type="flyToObject" disabled>Fly To Object(To the billboard)</button>
+    <hr>
+    <button data-type="clearScene">Clear Scene</button>
+    <button data-type="showObject" disabled>Hide Polygon</button>
+    <button data-type="deleteObject">Delete Object(Please create polygon first)</button>
+    <hr>
+    <button data-type="showInfo" disabled>Show Info</button>
+    <button data-type="showSubtitle" disabled>Show Subtitle</button>
+    <button data-type="closeSubtitle" disabled>Close Subtitle</button>
+    <button data-type="showPosition" disabled>Show Position</button>
+    <button data-type="hidePosition" disabled>Hide Position</button>
+    <hr>
+    <button data-type="loadCzml" disabled>Load Czml</button>
+    <button data-type="removeCzml" disabled>Remove Czml</button>
+  </div>
+  <script src="assets/scripts/jquery-2.1.0.min.js"></script>
+  <script src="SocketServer/WebSocket.js"></script>
+  <script>
+  WebSocketHelper.connect('ws://'+window.location.hostname+':8000').on('open', function(e){
+    $('#connectStatus').html('Connected').addClass('connected').removeClass('error');
+    $('#operations button').removeAttr('disabled');
+  }).on('close', function(e){
+    $('#connectStatus').html('Connection closed').removeClass('connected');
+    $('#operations button').attr('disabled', 'disabled');
+  }).on('error', function(e){
+    $('#connectStatus').html('Connection error').addClass('error');
+    $('#operations button').attr('disabled', 'disabled');
+  });
+  $('#operations button').on('click', function(){
+    switch($(this).attr('data-type')){
+      case 'showObject':
+      WebSocketHelper.sendMessage('{"func_name":"showObject", "args":{"id": "p1"}}');
+      break;
+      case 'showSubtitle':
+      WebSocketHelper.sendMessage('{"func_name":"showSubtitle", "args":{"text":"Some <br/> Text <br/> aaa","position":{"width":200,"height":200,"x":100,"y":40},"fontSize":14, "fontColor": "blue", "backgroundColor": "rgba(255,0,0,0.3)","alignment":"center"}}');
+      break;
+      case 'closeSubtitle':
+      WebSocketHelper.sendMessage('{"func_name":"closeSubtitle", "args":{}}');
+      break;
+      case 'loadModel':
+      WebSocketHelper.sendMessage('{"func_name": "loadModel","args": {"id":"1211","position":{"longitude": 121.6,"latitude": 41.6,"height": 50},"url":"models/CesiumAir/Cesium_Air.json"}}');   
+      break;
+      case 'twinkleModel':
+      WebSocketHelper.sendMessage('{"func_name": "twinkleModel","args": {"id": "1211","twinkle": "true","time":6}}');
+      break;
+
+      case 'showModel':
+      WebSocketHelper.sendMessage('{"func_name": "hideModel","args": {"id":"1211","show":"true"}}');   
+      break;
+      case 'hideModel':
+      WebSocketHelper.sendMessage('{"func_name": "hideModel","args": {"id":"1211","show":"false"}}');   
+      break;
+      case 'deleteModel':
+      WebSocketHelper.sendMessage('{"func_name": "deleteModel","args": {"id":"1211"}}');   
+      break;
+      case 'magnifyModel':
+      WebSocketHelper.sendMessage('{"func_name": "scaleModel","args": {"id":"1211","magnify":"true"}}');   
+      break;
+      case 'reduceModel':
+      WebSocketHelper.sendMessage('{"func_name": "scaleModel","args": {"id":"1211","magnify":"false"}}');   
+      break;
+      case 'flyToObject':
+      WebSocketHelper.sendMessage('{"func_name":"flyToObject", "args":{"id": "someBillboard"}}');
+      break;
+      case 'deleteObject':
+      WebSocketHelper.sendMessage('{"func_name":"deleteObject", "args":{"id": "p1"}}');
+      break;
+      case 'createPolygon':
+      WebSocketHelper.sendMessage('{"func_name":"createPolygon", "args":{"id":"p1", "positions":[{"longitude":"-115.0", "latitude": "37.0"}, {"longitude":"-115.0", "latitude": "32.0"}, {"longitude":"-107.0", "latitude": "33.0"}],"height":1000,"extrudedHeight":200000.0,"color":"blue","outlineColor":"yellow"}}');
+      break;
+      case 'addBillboard':
+      WebSocketHelper.sendMessage('{"func_name":"addBillboard","args":{"id":"someBillboard","position":{"longitude":"116.2317","latitude":"39.5427","height":100},"url":"'+window.location.origin+'/static/assets/images/googleLogo.png","tips":"some billboard","scale":0.2}}');
+      break;
+      case 'createEllipsoid':
+      WebSocketHelper.sendMessage('{"func_name":"createEllipsoid", "args":{"id": "id1", "center":{"longitude":"-77.21171","latitude":"38.535143", "height":810000},"semiMajorAxis": 900000, "semiMinorAxis": 610000, "extrudedHeight": 600000, "color": "green", "outlineColor": "yellow"}}');
+      break;
+      case 'setModeTo2D':
+      WebSocketHelper.sendMessage('{"func_name":"setSceneMode","args":{"mode": "2D"}}');
+      break;
+      case 'setModeTo3D':
+      WebSocketHelper.sendMessage('{"func_name":"setSceneMode","args":{"mode": "3D"}}');
+      break;
+      case 'setModeToColumbus':
+      WebSocketHelper.sendMessage('{"func_name":"setSceneMode","args":{"mode": "columbus"}}');
+      break;
+      case 'createPolyline':
+      WebSocketHelper.sendMessage('{"func_name":"createPolyline","args":{"id":"http://sdfsdsdfdsf","positions":[{"longitude":"-77.20171","latitude":"38.536143","height":0},{"longitude":"-77.21171","latitude":"38.535143","height":0}, {"longitude":-85.0,"latitude":26.0,"height":0}],"color":"blue","width":5.0,"outlineColor":"#ffccee","arrow":"tail"}}');
+      break;
+      //TODO add other apis
+      case 'flyTo':
+      WebSocketHelper.sendMessage('{"func_name":"flyTo","args":{"position":{"longitude":"-77.21171","latitude":"38.535143","height":500},"duration":100}}');
+      break;
+      case 'flyToExtent':
+      WebSocketHelper.sendMessage('{"func_name":"flyToExtent","args":{"extent":{"west":-90.0,"east":-87.0,"south":38,"north":40},"duration":400}}');
+      break;
+      case 'addLabel':
+      WebSocketHelper.sendMessage('{"func_name":"addLabel","args":{"id":"someLabelID","position":{"longitude":"-77.21171","latitude":"38.535143","height":0},"text":"Hello Cesium API", "font":{"height":16, "name":"Helvetica"}, "fillColor":"#fff","outlineColor":"#000","outlineWidth":2.0,"scale":1.0}}');
+      break;
+      case 'showInfo':
+      WebSocketHelper.sendMessage('{"func_name":"showInfo","args":{"url": "http://www.baidu.com"}}');
+      break;
+      case 'clearScene':
+      WebSocketHelper.sendMessage('{"func_name":"clearScene","args":{}}');
+      break;
+      case 'createEllipse':
+      WebSocketHelper.sendMessage('{"func_name":"createEllipse","args":{"center":{"longitude":"-77.21171","latitude":"38.535143"},"semiMajorAxis":210000,"semiMinorAxis":100100,"height":10000,"extrudedHeight":200000,"color":"#ff0f0f"}}');
+      break;
+      case 'loadCzml':
+      WebSocketHelper.sendMessage('{"func_name":"loadCzml","args":[{"id":"07d2340e-09b9-4a25-8aca-6c09d2b6d833","url":"czml/simple.czml"},{"id":"2","url":"czml/LotsOfSensors.czml"}]}');
+      break;
+      case 'removeCzml':
+      WebSocketHelper.sendMessage('{"func_name":"removeCzml", "args":[{"id":"07d2340e-09b9-4a25-8aca-6c09d2b6d833"},{"id":"2"}]}');
+      break;
+      case 'addAnimation':
+      WebSocketHelper.sendMessage('{"func_name":"addAnimation","args":{"positions":{"longitude":-100.0,"latitude":36.0,"height":0},"fillColor":{"red":0.0,"green":1.0,"blue":0.0,"alpha":0.5},"radius":1000000.0,"stRotation":90}}');
+      break;
+      case 'createSensor':
+      WebSocketHelper.sendMessage('{"func_name":"createSensor","args":{"positions":{"longitude":-100.0,"latitude":36.0,"height":0},"fillColor":{"red":0.0,"green":1.0,"blue":0.0,    "alpha":0.5},"radius":1000000.0,"stRotation":90}}');
+      break;
+      case 'createRing':
+      WebSocketHelper.sendMessage('{"func_name":"createRing","args":{"center":{"longitude":"-77.21171","latitude":"38.535143"},"outColor":{"red":0.0,"green":1.0,"blue":0.0,"alpha":0.5},"outradius":2000000.0,"intradius":1000000.0,"stRotation":90}}');
+
+      break;
+       case 'showPosition':
+      WebSocketHelper.sendMessage('{"func_name":"showPosition", "args":{"show": true, "type": ""}}');
+      // type -> decimal
+      break;
+      case 'hidePosition':
+      WebSocketHelper.sendMessage('{"func_name":"showPosition", "args":{"show": false}}');
+      break;
+    }
+  });
+  </script>
+  </body>
+</html>

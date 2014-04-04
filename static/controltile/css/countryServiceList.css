@@ -1,0 +1,66 @@
+/*common start*/
+body{font-family:"Microsoft Yahei",Tahoma,"SimSun";font-size:18px;margin-top:40px;padding:0px;color:#bebebe;background-color:#E4E8EC;}
+img{border:none;}
+h1, h2, h3, h4, h5, h6 {font-size: 100%;font-weight: normal;}
+ul li{list-style:none;}
+*{margin:0px;padding:0px;outline:0 none;}
+h1{text-indent:-9999px;height:0px;width:0px;overflow:hidden;}
+a{text-decoration:none;color:#f8f8f8;}
+.cf{zoom:1}
+.cf:after{content:".";display:block;clear:both;visibility:hidden;height:0;}
+/*common end*/
+
+/*content start*/
+#main {width: 1020px;margin: 0 auto;padding: 30px 0px 0px;background: #548B54;border-radius:2px;}
+.content{width: 100%;margin: 0 auto;}
+
+.content ul{width:100%;min-height:520px;margin-left:15px;}
+.content ul li{width:240px;height:240px;position:relative;margin:0px 10px 10px 0px;float:left;cursor:pointer;}
+.content ul li img{width:240px;height:240px;}
+
+.child ul{width:94%;min-height:520px;margin-left:4%;}
+.child ul li{width:140px;height:140px;position:relative;margin:0px 0px 15px 15px;float:left;cursor:pointer;box-shadow: 6px 6px 5px #006400;border-radius:10px;}
+.child ul li p{display:block;width:100%;height:100%;}
+
+.zoomst{left:0px;top:0px;z-index:1;}
+.zoomIn{position:absolute;width:152px;height: 152px;z-index:30;left:-4px;top:-4px;border:2px solid white;border-radius:10px;}
+
+
+
+.child ul li img{width:100%;height:100%;border:1px solid;border-radius:5px;}
+
+.content .name{height:30px;color:#fff;position:absolute;left:0px;bottom:0px;z-index:10;cursor:pointer;overflow:hidden;width:100%;}
+.content .name b{font-weight:normal;display: block;height:30px;line-height:30px;text-align: center;}
+
+.child .name{width:100%;padding:0px;height:20px;color:#fff;position:absolute;left:0px;bottom:0px;z-index:10;cursor:pointer;overflow:hidden;width:100%;}
+.child .name b{font-weight:normal;display: block;line-height:20px;text-align: center;}
+
+.grayBg {width:100%;padding:0px 0px;height:30px;position:absolute;left:0px;z-index: 5;height:30px;background-color:#000000;bottom:0px;opacity: 0.4;}
+
+.child .grayBg {width:100%;padding:0px 0px;height:20px;position:absolute;left:0px;z-index: 5;height:20px;background-color:#000000;bottom:0px;opacity: 0.4;border-radius:4px;}
+.backBtn, .closeBtn{display:block;width:40px;height:40px;background:url(../images/toolIcons.png) no-repeat 0px 0px;cursor:pointer;float:left;text-indent: -9999px;}
+.closeBtn{float:right;background-position: 0px -40px;margin-right: 1%;margin-top: 5px;}
+.backBtn{margin-left: 1%;margin-top: 5px;}
+ #buttonList{height:50px;width:100%;background-color:#006400;position:relative;border-bottom:1px solid;border-radius:2px;}
+.btnText{display:block;margin-left:10%;height:30px;float:left;padding: 10px 0px;width:80%;}
+.btnText b,.btnText input{font-family:"Microsoft Yahei",Tahoma,"SimSun";font-size:15px;margin:0px;padding:0px;color:#000000 ;width:14%;}
+
+#search{width:10%}
+/*content end*/
+@media all and (max-width: 770px) {
+#main{width:770px;}
+#buttonList{width:770px;}
+.btnText{margin-left:1%;}
+}
+@media all and (max-width: 520px) {
+#main{width:520px;}
+#buttonList{width:520px;}
+.btnText{margin-left:1%;}
+.btnText b,.btnText input{font-size: 10px;}
+}
+@media all and (max-width: 270px) {
+#main{width:270px;}
+#buttonList{width:270px;}
+.btnText b,.btnText input{font-size: 8px;}
+.btnText{margin-left:1%;}
+}

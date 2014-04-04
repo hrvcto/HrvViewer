@@ -1,0 +1,6 @@
+<config>
+    <base_path_list>
+        <path>/media/datadisk/data/</path>
+    </base_path_list>
+    <terrain_path>E:/Projects/DmDownload/terrain/</terrain_path>
+</config>
