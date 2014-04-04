@@ -26,19 +26,20 @@ define(function(){
     div.style.top = position.y + 'px';
     div.style.left = position.x + 'px';
     div.style.backgroundColor = backgroundColor;
-    div.style.color = fontColor;
-    div.style.fontSize = fontSize + 'px';
+    
     div.style.textAlign = alignment;
-    div.innerHTML = closeButton.join('') + '<div>' + options.text+ '</div>';
+    console.log(options.textStyle)
+    div.innerHTML = closeButton.join('') + '<div id="text">' + options.text+ '</div>';
 
     var cssFragment = document.createElement('style');
     cssFragment.type = 'text/css';
     cssFragment.rel = 'stylesheet';
     cssFragment.innerHTML = style.join('');
 
-    document.body.appendChild(cssFragment);
+    document.body.appendChild(cssFragment); 
     document.body.appendChild(div);
-
+    console.log(document.getElementById('text'))
+    document.getElementById('text').className = options.textStyle;
     document.getElementById('showScript-closeBtn').addEventListener('click', function(e){
       document.body.removeChild(document.getElementById('showScriptDIV'));
     }, false);
