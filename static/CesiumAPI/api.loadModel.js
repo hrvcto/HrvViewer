@@ -9,12 +9,13 @@ define(function(){
     var modelpose = ellipsoid.cartographicToCartesian(CartoFromDegrees);
     var modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(modelpose);
     var creatMode = Cesium.Model;
+    console.log(options);
     var model = primitives.add(
       creatMode.fromGltf({
         url : options.url,
-        modelMatrix : modelMatrix
-      })
-      );
+        modelMatrix : modelMatrix ,
+        scale:options.scale
+      })); 
     model.readyToRender.addEventListener(function(model) {
       var worldBoundingSphere = model.computeWorldBoundingSphere();
       var r = 5 * worldBoundingSphere.radius;
